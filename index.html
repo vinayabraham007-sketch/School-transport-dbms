@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>School Transport Manager</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#f3f4fb;--card:#fff;--tx:#161a2e;--mu:#6a7090;--ac:#4f46e5;--ac2:#ffc928;--bd:#e5e7f2;--bad:#d32f2f;--ok:#1b8f3c;--warn:#b7791f;--sh:0 8px 28px rgba(40,45,110,.08)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1020;--card:#171a31;--tx:#eceefc;--mu:#9a9fc4;--ac:#8b86ff;--bd:#272b4d;--bad:#ff7b7b;--ok:#5fd37d;--warn:#f0b955;--sh:none}}
+:root[data-theme="dark"]{--bg:#0e1020;--card:#171a31;--tx:#eceefc;--mu:#9a9fc4;--ac:#8b86ff;--bd:#272b4d;--bad:#ff7b7b;--ok:#5fd37d;--warn:#f0b955;--sh:none}
+*{box-sizing:border-box}html,body{margin:0}body{background:var(--bg);color:var(--tx);font:15px/1.45 "Segoe UI",system-ui,-apple-system,sans-serif}
+.hero{background:linear-gradient(135deg,#1e1b4b,#4f46e5 62%,#7c3aed);color:#fff;position:relative;padding:34px 18px 40px}
+.hero:after{content:"";position:absolute;left:0;right:0;bottom:0;height:6px;background:repeating-linear-gradient(90deg,#ffc928 0 26px,transparent 26px 44px)}
+.hero .in{max-width:960px;margin:auto}.pill{display:inline-block;background:rgba(255,255,255,.16);border-radius:20px;padding:4px 12px;font-size:12px;letter-spacing:.05em}
+.hero h1{font-size:clamp(28px,6vw,46px);line-height:1.1;margin:12px 0 10px;font-weight:800}.hero p{max-width:560px;margin:0 0 16px;opacity:.88}
+.tags span{display:inline-block;background:#ffc928;color:#2b2200;border-radius:8px;padding:4px 10px;font-size:12px;font-weight:700;margin:0 6px 6px 0}
+nav{position:sticky;top:0;z-index:5;display:flex;gap:6px;overflow-x:auto;padding:10px 14px;background:var(--bg);border-bottom:1px solid var(--bd)}
+nav button{white-space:nowrap;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:20px;padding:7px 14px;font:inherit;cursor:pointer;transition:.15s}
+nav button:hover{border-color:var(--ac)}nav button.on{background:var(--ac);color:#fff;border-color:var(--ac);box-shadow:0 4px 14px rgba(79,70,229,.35)}
+main{padding:16px 14px 30px;max-width:960px;margin:auto}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:16px;margin-bottom:16px;box-shadow:var(--sh)}
+.card h3{margin:0 0 10px;font-size:16px}
+label{display:block;font-size:12px;font-weight:600;color:var(--mu);margin:10px 0 4px}
+input,select{width:100%;padding:10px 11px;border:1px solid var(--bd);border-radius:10px;background:var(--bg);color:var(--tx);font:inherit}
+input:focus,select:focus{outline:2px solid var(--ac);border-color:transparent}
+.btn{background:var(--ac);color:#fff;border:0;border-radius:10px;padding:11px 20px;font:inherit;font-weight:600;margin-top:14px;cursor:pointer}
+.wrap{overflow-x:auto;margin-top:10px}table{border-collapse:collapse;width:100%;font-size:13px}th,td{text-align:left;padding:9px 10px;white-space:nowrap}
+th{color:var(--mu);font-size:11px;text-transform:uppercase;letter-spacing:.05em;border-bottom:2px solid var(--bd)}tr:nth-child(even) td{background:rgba(120,120,180,.06)}
+.x{background:none;border:0;color:var(--bad);font-size:16px;cursor:pointer}
+.bar{background:var(--bd);border-radius:6px;height:8px;min-width:80px;overflow:hidden}.bar i{display:block;height:100%;border-radius:6px;background:var(--ac)}
+.bar.big{height:12px;margin:10px 0 4px}.bar i.full{background:var(--bad)}
+.bad{color:var(--bad);font-weight:700}.ok{color:var(--ok);font-weight:700}
+.chip{display:inline-block;border:1px solid var(--bd);border-radius:20px;padding:3px 11px;font-size:12px;margin:0 6px 4px 0;background:var(--bg)}
+.chip.ok{border-color:var(--ok)}.chip.warn{color:var(--warn);border-color:var(--warn)}.chip.bad{border-color:var(--bad)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(138px,1fr));gap:12px;margin-bottom:16px}
+.kpi{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:14px;box-shadow:var(--sh);display:flex;flex-direction:column}
+.kpi span{font-size:22px}.kpi b{font-size:26px;margin-top:2px}.kpi small{color:var(--mu)}
+.rh{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px}.rh h3{margin:0 8px 0 0}
+.line{display:flex;overflow-x:auto;padding:14px 0 4px;position:relative}
+.st{min-width:104px;flex:1;text-align:center;position:relative;display:flex;flex-direction:column;align-items:center;gap:2px}
+.st:before{content:"";position:absolute;top:7px;left:0;right:0;border-top:3px solid var(--ac2)}.st:first-child:before{left:50%}.st:last-child:before{right:50%}
+.st i{width:15px;height:15px;border-radius:50%;background:var(--card);border:4px solid var(--ac);position:relative;z-index:1}
+.st small{color:var(--mu)}.st em{font-style:normal;font-size:12px}
+#toast{position:fixed;left:12px;right:12px;bottom:calc(14px + env(safe-area-inset-bottom,0px));max-width:560px;margin:auto;padding:13px 16px;border-radius:12px;color:#fff;display:none;z-index:9;box-shadow:0 8px 30px rgba(0,0,0,.3)}
+footer{text-align:center;color:var(--mu);font-size:12px;padding:0 14px 30px}footer a{color:var(--ac)}
+</style></head><body>
+<header class="hero"><div class="in"><span class="pill">DBMS MINI PROJECT</span><h1>School Transport<br>Route &amp; Pickup Manager</h1><p>Routes, buses, crews, students, pickups, fees and maintenance in one normalized database, with every business rule enforced.</p><div class="tags"><span>3NF</span><span>Triggers</span><span>CHECK · UNIQUE · FK</span><span>Indexed</span></div></div></header>
+<nav id="nav"></nav><main id="main"></main><footer>Interactive simulator of the SQL rules · <a href="https://github.com/YOUR-USERNAME/school-transport-dbms">View on GitHub</a></footer><div id="toast"></div>
+<script>
+const T=new Date().toISOString().slice(0,10);
+const D={
+bus:[{id:1,reg:'KA01AB1001',cap:4,status:'Active'},{id:2,reg:'KA01AB1002',cap:40,status:'Active'},{id:3,reg:'KA01AB1003',cap:30,status:'Maintenance'}],
+driver:[{id:1,name:'Ravi Kumar',exp:'2030-05-01'},{id:2,name:'Anil Das',exp:'2029-01-15'},{id:3,name:'Sunil Rao',exp:'2025-01-01'}],
+att:[{id:1,name:'Meena'},{id:2,name:'Latha'},{id:3,name:'Geeta'}],
+route:[{id:1,name:'R1 North'},{id:2,name:'R2 South'}],
+stop:['Hill Park','Green Ave','Mall Road','Lake View','Station Rd','Market'].map((n,i)=>({id:i+1,name:n})),
+rs:[[1,1,1,'07:00'],[1,2,2,'07:10'],[1,3,3,'07:20'],[2,4,1,'07:05'],[2,5,2,'07:15'],[2,6,3,'07:25']].map((a,i)=>({id:i+1,route:a[0],stop:a[1],seq:a[2],time:a[3]})),
+alloc:[{id:1,route:1,bus:1,driver:1,att:1,from:'2026-06-01'},{id:2,route:2,bus:2,driver:2,att:2,from:'2026-06-01'}],
+student:['Aarav S|5A','Diya M|6B','Kabir R|7A','Isha P|4C','Neel T|8B','Sara K|3A','Vihaan D|9A','Anya G|2B'].map((s,i)=>({id:i+1,name:s.split('|')[0],cls:s.split('|')[1]})),
+plan:[{id:1,name:'Monthly',amt:1500},{id:2,name:'Term',amt:6000}],
+reg:[[1,1,1],[2,2,1],[3,3,2],[4,3,1],[5,4,2],[6,5,1],[7,6,2]].map((a,i)=>({id:i+1,student:a[0],rs:a[1],plan:a[2],status:'Active'})),
+log:[[1,'Present'],[2,'Absent'],[3,'Late'],[5,'Absent']].map((a,i)=>({id:i+1,reg:a[0],date:T,trip:'Pickup',status:a[1]})),
+pay:[[1,1500,'Cash','RC001'],[2,500,'UPI','RC002'],[5,6000,'Card','RC003']].map((a,i)=>({id:i+1,reg:a[0],amt:a[1],mode:a[2],rc:a[3]})),
+mt:[{id:1,bus:1,date:'2026-07-01',type:'Oil change',cost:3500,next:'2026-10-01',status:'Done'},{id:2,bus:2,date:'2026-09-01',type:'Full service',cost:9000,next:'2027-03-01',status:'Done'},{id:3,bus:3,date:'2026-09-20',type:'Engine repair',cost:25000,next:'',status:'In Progress'}]};
+let nid=100,cur='Dashboard',q='';
+const g=(t,i)=>D[t].find(x=>x.id==i)||{};
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fail=m=>{throw m};
+const L=(t,f)=>()=>D[t].map(x=>[x.id,f(x)]);
+const rsName=r=>g('route',r.route).name+' / '+g('stop',r.stop).name;
+const regName=r=>g('student',r.student).name;
+const routeOf=reg=>g('rs',reg.rs).route;
+const bus=r=>g('bus',(D.alloc.find(a=>a.route==r&&!a.to)||{}).bus);
+const used=r=>D.reg.filter(x=>x.status=='Active'&&routeOf(x)==r).length;
+const paid=id=>D.pay.filter(p=>p.reg==id).reduce((s,p)=>s+p.amt,0);
+const push=(t,o)=>{o.id=nid++;D[t].push(o)};
+const uniq=(t,f,v,m)=>D[t].some(x=>String(x[f]).toLowerCase()==String(v).toLowerCase())&&fail(m);
+const TABS={
+Routes:{t:'route',f:[['name','Route name','t']],add:v=>{uniq('route','name',v.name,'Route name already exists');push('route',v)},cols:[['Route',r=>r.name],['Stops',r=>D.rs.filter(s=>s.route==r.id).length]]},
+Stops:{t:'stop',f:[['name','Stop name','t']],add:v=>{uniq('stop','name',v.name,'Stop already exists');push('stop',v)},cols:[['Stop',r=>r.name]]},
+'Route Setup':{t:'rs',f:[['route','Route','s',L('route',x=>x.name)],['stop','Stop','s',L('stop',x=>x.name)],['seq','Stop sequence','n'],['time','Pickup time','tm']],
+ add:v=>{if(v.seq<1)fail('Sequence must be 1 or more');if(D.rs.some(x=>x.route==v.route&&x.seq==v.seq))fail('UNIQUE violation: stop sequence '+v.seq+' already used on this route');if(D.rs.some(x=>x.route==v.route&&x.stop==v.stop))fail('Stop already on this route');push('rs',v)},
+ cols:[['Route',r=>g('route',r.route).name],['Seq',r=>r.seq],['Stop',r=>g('stop',r.stop).name],['Time',r=>r.time]],sort:(a,b)=>a.route-b.route||a.seq-b.seq},
+Students:{t:'student',f:[['name','Name','t'],['cls','Class','t']],add:v=>push('student',v),cols:[['Name',r=>r.name],['Class',r=>r.cls]]},
+Assign:{t:'reg',f:[['student','Student','s',L('student',x=>x.name)],['rs','Stop','s',L('rs',rsName)],['plan','Fee plan','s',L('plan',x=>x.name+' ₹'+x.amt)]],
+ add:v=>{if(D.reg.some(x=>x.student==v.student&&x.status=='Active'))fail('Student already has an active assignment');const r=g('rs',v.rs).route,b=bus(r);
+  if(!b)fail('No bus allocated to this route');if(used(r)>=b.cap)fail('Bus capacity full: '+b.reg+' holds '+b.cap);v.status='Active';push('reg',v)},
+ cols:[['Student',regName],['Route / stop',r=>rsName(g('rs',r.rs))],['Status',r=>r.status]],guard:id=>0},
+Allocation:{t:'alloc',f:[['route','Route','s',L('route',x=>x.name)],['bus','Bus','s',L('bus',x=>x.reg+' (cap '+x.cap+', '+x.status+')')],['driver','Driver','s',L('driver',x=>x.name)],['att','Attendant','s',L('att',x=>x.name)],['from','Start date','d']],
+ add:v=>{if(g('driver',v.driver).exp<=v.from)fail('Driver licence expired ('+g('driver',v.driver).exp+')');if(g('bus',v.bus).status!='Active')fail('Bus is not Active');D.alloc.filter(a=>a.route==v.route).forEach(a=>a.to=v.from);push('alloc',v)},
+ cols:[['Route',r=>g('route',r.route).name],['Bus',r=>g('bus',r.bus).reg],['Driver',r=>g('driver',r.driver).name],['Attendant',r=>g('att',r.att).name],['From',r=>r.from],['To',r=>r.to||'current']]},
+Pickup:{t:'log',f:[['reg','Student','s',()=>D.reg.filter(x=>x.status=='Active').map(x=>[x.id,regName(x)])],['date','Date','d'],['trip','Trip','s',()=>[['Pickup','Pickup'],['Drop','Drop']]],['status','Status','s',()=>[['Present','Present'],['Absent','Absent'],['Late','Late']]]],
+ add:v=>{if(D.log.some(x=>x.reg==v.reg&&x.date==v.date&&x.trip==v.trip))fail('Already marked for this student, date and trip');push('log',v)},
+ cols:[['Student',r=>regName(g('reg',r.reg))],['Date',r=>r.date],['Trip',r=>r.trip],['Status',r=>r.status]],sort:(a,b)=>b.date.localeCompare(a.date)},
+Fees:{t:'pay',f:[['reg','Student','s',()=>D.reg.filter(x=>x.status=='Active').map(x=>[x.id,regName(x)+' (due ₹'+(g('plan',x.plan).amt-paid(x.id))+')'])],['amt','Amount','n'],['mode','Mode','s',()=>['Cash','UPI','Card'].map(x=>[x,x])],['rc','Receipt no','t']],
+ add:v=>{const due=g('plan',g('reg',v.reg).plan).amt-paid(v.reg);if(v.amt<=0)fail('Amount must be greater than 0');if(v.amt>due)fail('Payment exceeds fee due (₹'+due+' remaining)');uniq('pay','rc',v.rc,'Receipt number already used');push('pay',v)},
+ cols:[['Student',r=>regName(g('reg',r.reg))],['Amount',r=>'₹'+r.amt],['Mode',r=>r.mode],['Receipt',r=>r.rc]]},
+Maintenance:{t:'mt',f:[['bus','Bus','s',L('bus',x=>x.reg)],['date','Service date','d'],['type','Type','t'],['cost','Cost','n'],['next','Next due date (opt)','d'],['status','Status','s',()=>[['Done','Done'],['In Progress','In Progress']]]],
+ add:v=>{if(v.cost<0)fail('Cost cannot be negative');push('mt',v)},cols:[['Bus',r=>g('bus',r.bus).reg],['Date',r=>r.date],['Type',r=>r.type],['Cost',r=>'₹'+r.cost],['Next due',r=>r.next||'-'],['Status',r=>r.status]]}};
+const RPT={
+'Route list':()=>[['Route','Seq','Stop','Time'],D.rs.slice().sort((a,b)=>a.route-b.route||a.seq-b.seq).map(r=>[g('route',r.route).name,r.seq,g('stop',r.stop).name,r.time])],
+'Capacity utilization':()=>[['Route','Bus','Capacity','Used','Free','Utilization'],D.route.map(r=>{const b=bus(r.id)||{};const u=used(r.id),p=b.cap?Math.round(100*u/b.cap):0;return[r.name,b.reg||'none',b.cap||0,u,(b.cap||0)-u,{h:`<div class="bar"><i style="width:${p}%"></i></div>${p}%`}]})],
+'Absent students today':()=>[['Student','Class','Route','Stop'],D.log.filter(l=>l.status=='Absent'&&l.date==T).map(l=>{const r=g('reg',l.reg),s=g('student',r.student),x=g('rs',r.rs);return[s.name,s.cls,g('route',x.route).name,g('stop',x.stop).name]})],
+'Fee dues':()=>[['Student','Fee','Paid','Due'],D.reg.filter(r=>r.status=='Active').map(r=>{const f=g('plan',r.plan).amt,p=paid(r.id);return[regName(r),f,p,f-p]}).filter(r=>r[3]>0).sort((a,b)=>b[3]-a[3])],
+'Driver assignments':()=>[['Driver','Licence expiry','Bus','Route','From'],D.alloc.map(a=>[g('driver',a.driver).name,g('driver',a.driver).exp,g('bus',a.bus).reg,g('route',a.route).name,a.from])],
+'Maintenance status':()=>[['Bus','Status','Last service','Next due','Total cost','Flag'],D.bus.map(b=>{const m=D.mt.filter(x=>x.bus==b.id),nx=m.map(x=>x.next).filter(Boolean).sort().pop()||'',od=nx&&nx<T;return[b.reg,b.status,m.map(x=>x.date).sort().pop()||'-',nx||'-',m.reduce((s,x)=>s+x.cost,0),{h:`<span class="${od||b.status!='Active'?'bad':'ok'}">${od?'OVERDUE':b.status!='Active'?'UNFIT':'OK'}</span>`}]})]};
+function toast(m,ok){const t=document.getElementById('toast');t.textContent=m;t.style.background=ok?'#2e7d32':'#c62828';t.style.display='block';clearTimeout(toast.h);toast.h=setTimeout(()=>t.style.display='none',3500)}
+const table=(h,rows,del)=>`<div class="wrap"><table><tr>${h.map(x=>`<th>${x}</th>`).join('')}${del?'<th></th>':''}</tr>${rows.map(r=>`<tr>${r.cells.map(c=>`<td>${c&&c.h!=null?c.h:esc(c)}</td>`).join('')}${del?`<td><button class="x" data-del="${r.id}" title="Delete">✕</button></td>`:''}</tr>`).join('')||`<tr><td colspan="9">No records</td></tr>`}</table></div>`;
+function dash(){
+ const act=D.reg.filter(r=>r.status=='Active'),cap=D.route.reduce((s,r)=>s+((bus(r.id)||{}).cap||0),0),u=D.route.reduce((s,r)=>s+used(r.id),0);
+ const due=act.reduce((s,r)=>s+g('plan',r.plan).amt-paid(r.id),0),al=RPT['Maintenance status']()[1].filter(r=>r[5].h.includes('bad')).length;
+ const lg=D.log.filter(l=>l.date==T),cn=s=>lg.filter(l=>l.status==s).length;
+ const k=[['🚌',D.bus.filter(b=>b.status=='Active').length+'/'+D.bus.length,'Buses active'],['🛣️',D.route.length,'Routes'],['🎒',act.length,'Students riding'],['💺',(cap?Math.round(100*u/cap):0)+'%','Seats used'],['₹',due.toLocaleString('en-IN'),'Fees outstanding'],['🔧',al,'Maintenance alerts']];
+ return `<div class="kpis">${k.map(x=>`<div class="kpi"><span>${x[0]}</span><b>${x[1]}</b><small>${x[2]}</small></div>`).join('')}</div>
+ <div class="card"><h3>Today's pickups</h3><span class="chip ok">✔ ${cn('Present')} present</span><span class="chip warn">⏱ ${cn('Late')} late</span><span class="chip bad">✖ ${cn('Absent')} absent</span></div>
+ ${D.route.map(r=>{const b=bus(r.id),a=D.alloc.find(x=>x.route==r.id&&!x.to),p=b?Math.round(100*used(r.id)/b.cap):0;
+ return `<div class="card"><div class="rh"><h3>${esc(r.name)}</h3>${b?`<span class="chip">🚌 ${b.reg}</span><span class="chip">👤 ${esc(g('driver',a.driver).name)}</span><span class="chip ${p>=100?'bad':''}">${used(r.id)}/${b.cap} seats</span>`:'<span class="chip bad">No bus</span>'}</div><div class="bar big"><i class="${p>=100?'full':''}" style="width:${p}%"></i></div>
+ <div class="line">${D.rs.filter(s=>s.route==r.id).sort((x,y)=>x.seq-y.seq).map(s=>`<div class="st"><i></i><b>${esc(g('stop',s.stop).name)}</b><small>${s.time}</small><em>${D.reg.filter(x=>x.status=='Active'&&x.rs==s.id).length} 🎒</em></div>`).join('')}</div></div>`}).join('')}`}
+function draw(){
+ document.getElementById('nav').innerHTML=['Dashboard',...Object.keys(TABS),'Reports'].map(k=>`<button class="${k==cur?'on':''}" data-tab="${k}">${k}</button>`).join('');
+ const m=document.getElementById('main');
+ if(cur=='Dashboard'){m.innerHTML=dash();return}
+ if(cur=='Reports'){const n=window.rn||'Route list',[h,rows]=RPT[n]();m.innerHTML=`<div class="card"><label>Report</label><select id="rsel">${Object.keys(RPT).map(k=>`<option ${k==n?'selected':''}>${k}</option>`).join('')}</select></div><div class="card">${table(h,rows.map(c=>({cells:c})))}</div>`;return}
+ const c=TABS[cur];
+ const form=c.f.map(([k,l,t,s])=>t=='s'?`<label>${l}</label><select id="f_${k}">${s().map(o=>`<option value="${esc(o[0])}">${esc(o[1])}</option>`).join('')}</select>`:`<label>${l}</label><input id="f_${k}" type="${t=='d'?'date':t=='n'?'number':t=='tm'?'time':'text'}" ${t=='d'&&!l.includes('opt')?`value="${T}"`:''} ${t=='tm'?'value="07:00"':''}>`).join('');
+ let rows=D[c.t].slice();if(c.sort)rows.sort(c.sort);
+ rows=rows.map(r=>({id:r.id,cells:c.cols.map(x=>x[1](r))})).filter(r=>r.cells.join(' ').toLowerCase().includes(q.toLowerCase()));
+ m.innerHTML=`<div class="card">${form}<button class="btn" id="add">Add ${cur}</button></div><div class="card"><input id="q" placeholder="Search…" value="${esc(q)}">${table(c.cols.map(x=>x[0]),rows,1)}</div>`;
+}
+function remove(c,id){
+ const t=c.t;
+ if(t=='rs'&&D.reg.some(r=>r.rs==id))fail('Stop has assigned students');
+ if(t=='route'&&(D.rs.some(r=>r.route==id)||D.alloc.some(a=>a.route==id)))fail('Route still has stops or allocations');
+ if(t=='student'&&D.reg.some(r=>r.student==id))fail('Student has a transport registration');
+ if(t=='reg'){D.log=D.log.filter(x=>x.reg!=id);D.pay=D.pay.filter(x=>x.reg!=id)}
+ D[t]=D[t].filter(x=>x.id!=id)}
+document.addEventListener('click',e=>{const t=e.target;
+ if(t.dataset.tab){cur=t.dataset.tab;q='';draw()}
+ else if(t.id=='add'){const c=TABS[cur],v={};
+  try{c.f.forEach(([k,l,ty])=>{let x=document.getElementById('f_'+k).value.trim();if(!x&&!l.includes('opt'))fail(l+' is required');v[k]=ty=='n'?+x:(/^\d+$/.test(x)&&ty=='s'?+x:x)});
+   c.add(v);toast(cur+' saved',1);draw()}catch(er){toast('Rejected: '+er)}}
+ else if(t.dataset.del){try{remove(TABS[cur],t.dataset.del);draw()}catch(er){toast('Cannot delete: '+er)}}});
+document.addEventListener('input',e=>{if(e.target.id=='q'){q=e.target.value;const p=e.target.selectionStart;draw();const n=document.getElementById('q');n.focus();n.setSelectionRange(p,p)}});
+document.addEventListener('change',e=>{if(e.target.id=='rsel'){window.rn=e.target.value;draw()}});
+draw();
+</script></body></html>
